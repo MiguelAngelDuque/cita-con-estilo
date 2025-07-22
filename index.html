@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cita con Estilo</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script type="module" src="app.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Cita con Estilo</h1>
+
+    <div id="auth-section">
+      <h2>Iniciar Sesión</h2>
+      <input type="email" id="login-email" placeholder="Correo electrónico" />
+      <input type="password" id="login-password" placeholder="Contraseña" />
+      <button id="login-btn">Entrar</button>
+      <p>¿No tienes cuenta? <a href="#" id="show-register">Regístrate</a></p>
+    </div>
+
+    <div id="register-section" class="hidden">
+      <h2>Registro</h2>
+      <input type="email" id="register-email" placeholder="Correo electrónico" />
+      <input type="password" id="register-password" placeholder="Contraseña" />
+      <button id="register-btn">Crear cuenta</button>
+      <p>¿Ya tienes cuenta? <a href="#" id="show-login">Iniciar sesión</a></p>
+    </div>
+
+    <div id="main-section" class="hidden">
+      <h2>Reservar una cita</h2>
+      <input type="text" id="name" placeholder="Tu nombre" />
+      <input type="date" id="date" />
+      <input type="time" id="time" />
+      <button id="reserve-btn">Reservar</button>
+
+      <h3>Mis citas</h3>
+      <ul id="appointments-list"></ul>
+
+      <button id="logout-btn" class="logout">Cerrar sesión</button>
+    </div>
+  </div>
+</body>
+</html>
