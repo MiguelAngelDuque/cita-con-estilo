@@ -1,46 +1,111 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const loginSection = document.getElementById('auth-section');
-  const registerSection = document.getElementById('register-section');
-  const mainSection = document.getElementById('main-section');
+// Referencias al DOM
+const authContainer = document.getElementById('auth-container');
+const appointmentContainer = document.getElementById('appointment-container');
+const emailInput = document.getElementById('email');
+const passwordInput = document.getElementById('password');
+const btnLogin = document.getElementById('btn-login');
+const btnRegister = document.getElementById('btn-register');
+const errorMessage = document.getElementById('error-message');
+const appointmentMessage = document.getElementById('appointment-message');
+const btnReserve = document.getElementById('btn-reserve');
+const btnLogout = document.getElementById('btn-logout');
+const dateInput = document.getElementById('date');
+const timeInput = document.getElementById('time');
 
-  const showLogin = document.getElementById('show-login');
-  const showRegister = document.getElementById('show-register');
+// Registro
+btnRegister.addEventListener('click', () => {
+  const email = emailInput.value.trim();
+  const password = passwordInput.value.trim();
 
-  showLogin.addEventListener('click', () => {
-    registerSection.classList.add('hidden');
-    loginSection.classList.remove('hidden');
+  errorMessage.textContent = '';
+  if (!email || !password) {
+    errorMessage.textContent = 'Por favor, rellena ambos campos.';
+    return;
+  }
+
+  auth.createUserWithEmailAndPassword(email, password)
+    .then(() => {
+      errorMessage.textContent = '';
+      appointmentMessage.textContent = '';
+      emailInput.value = '';
+      passwordInput.value = '';
+      alert('Registro exitoso. Ya puedes reservar tu cita.');
+    })
+    .catch(err => {
+      errorMessage.textContent = err.message;
+    });
+});
+
+// Login
+btnLogin.addEventListener('click', () => {
+  const email = emailInput.value.trim();
+  const password = passwordInput.value.trim();
+
+  errorMessage.textContent = '';
+  if (!email || !password) {
+    errorMessage.textContent = 'Por favor, rellena ambos campos.';
+    return;
+  }
+
+  auth.signInWithEmailAndPassword(email, password)
+    .then(() => {
+      errorMessage.textContent = '';
+      appointmentMessage.textContent = '';
+      emailInput.value = '';
+      passwordInput.value = '';
+    })
+    .catch(err => {
+      errorMessage.textContent = err.message;
+    });
+});
+
+// Detectar estado de sesión
+auth.onAuthStateChanged(user => {
+  if (user) {
+    // Usuario logueado
+    authContainer.style.display = 'none';
+    appointmentContainer.style.display = 'block';
+  } else {
+    // No logueado
+    authContainer.style.display = 'block';
+    appointmentContainer.style.display = 'none';
+  }
+});
+
+// Reservar cita
+btnReserve.addEventListener('click', () => {
+  const date = dateInput.value;
+  const time = timeInput.value;
+  const user = auth.currentUser;
+
+  appointmentMessage.textContent = '';
+
+  if (!date || !time) {
+    appointmentMessage.textContent = 'Selecciona fecha y hora.';
+    appointmentMessage.style.color = '#e74c3c';
+    return;
+  }
+
+  db.collection('citas').add({
+    uid: user.uid,
+    email: user.email,
+    fecha: date,
+    hora: time,
+    creado: firebase.firestore.FieldValue.serverTimestamp()
+  })
+  .then(() => {
+    appointmentMessage.textContent = 'Cita reservada con éxito.';
+    appointmentMessage.style.color = '#27ae60';
+    dateInput.value = '';
+    timeInput.value = '';
+  })
+  .catch(err => {
+    appointmentMessage.textContent = 'Error al reservar cita: ' + err.message;
+    appointmentMessage.style.color = '#e74c3c';
   });
+});
 
-  showRegister.addEventListener('click', () => {
-    loginSection.classList.add('hidden');
-    registerSection.classList.remove('hidden');
-  });
-
-  // Aquí conectaremos Firebase más adelante:
-  document.getElementById('login-btn').addEventListener('click', () => {
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
-    alert(`Login con ${email} (aquí irá Firebase)`);
-  });
-
-  document.getElementById('register-btn').addEventListener('click', () => {
-    const email = document.getElementById('register-email').value;
-    const password = document.getElementById('register-password').value;
-    alert(`Registro con ${email} (aquí irá Firebase)`);
-  });
-
-  document.getElementById('reserve-btn').addEventListener('click', () => {
-    const name = document.getElementById('name').value;
-    const date = document.getElementById('date').value;
-    const time = document.getElementById('time').value;
-
-    const appointment = `${date} a las ${time} - ${name}`;
-    const li = document.createElement('li');
-    li.textContent = appointment;
-    document.getElementById('appointments-list').appendChild(li);
-  });
-
-  document.getElementById('logout-btn').addEventListener('click', () => {
-    alert("Cerrar sesión (aquí irá Firebase logout)");
-  });
+// Logout
+btnLogout.addEventListener('click', () => {
+  auth.signOut();
 });

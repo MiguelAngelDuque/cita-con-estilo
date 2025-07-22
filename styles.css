@@ -1,64 +1,93 @@
-body {
-  margin: 0;
+* {
+  box-sizing: border-box;
   font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
-  color: #333;
+}
+
+body {
+  background: #f7f9fc;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .container {
-  max-width: 400px;
-  margin: 50px auto;
-  padding: 30px;
   background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-h1, h2 {
+  padding: 30px;
+  border-radius: 10px;
+  width: 320px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
   text-align: center;
-  color: #444;
 }
 
-input {
-  display: block;
+h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="date"],
+input[type="time"] {
   width: 100%;
-  margin: 10px 0;
-  padding: 10px;
-  border: 1px solid #ddd;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1.5px solid #ddd;
   border-radius: 6px;
   font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="date"]:focus,
+input[type="time"]:focus {
+  border-color: #5dade2;
+  outline: none;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
 button {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  background-color: #00bfa5;
-  color: white;
+  flex: 1;
+  padding: 12px 0;
   border: none;
   border-radius: 6px;
+  background: #5dade2;
+  color: white;
+  font-weight: bold;
   cursor: pointer;
-  font-size: 16px;
+  transition: background 0.3s ease;
 }
 
 button:hover {
-  background-color: #009e88;
+  background: #3498db;
+}
+
+.error {
+  color: #e74c3c;
+  font-weight: 600;
+  min-height: 20px;
+}
+
+.success {
+  color: #27ae60;
+  font-weight: 600;
+  min-height: 20px;
 }
 
 .logout {
-  margin-top: 30px;
-  background-color: #ff5252;
+  margin-top: 20px;
+  background: #e74c3c;
 }
 
 .logout:hover {
-  background-color: #e53935;
-}
-
-.hidden {
-  display: none;
-}
-
-a {
-  color: #00bfa5;
-  text-decoration: none;
+  background: #c0392b;
 }

@@ -2,43 +2,64 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cita con Estilo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cita Con Estilo - Peluquería</title>
   <link rel="stylesheet" href="styles.css" />
-  <script type="module" src="app.js" defer></script>
 </head>
 <body>
+
   <div class="container">
-    <h1>Cita con Estilo</h1>
 
-    <div id="auth-section">
-      <h2>Iniciar Sesión</h2>
-      <input type="email" id="login-email" placeholder="Correo electrónico" />
-      <input type="password" id="login-password" placeholder="Contraseña" />
-      <button id="login-btn">Entrar</button>
-      <p>¿No tienes cuenta? <a href="#" id="show-register">Regístrate</a></p>
+    <!-- Formulario de autenticación -->
+    <div id="auth-container">
+      <h2>Registro / Login</h2>
+      <input type="email" id="email" placeholder="Correo electrónico" />
+      <input type="password" id="password" placeholder="Contraseña" />
+      <div class="buttons">
+        <button id="btn-login">Iniciar sesión</button>
+        <button id="btn-register">Registrarse</button>
+      </div>
+      <p id="error-message" class="error"></p>
     </div>
 
-    <div id="register-section" class="hidden">
-      <h2>Registro</h2>
-      <input type="email" id="register-email" placeholder="Correo electrónico" />
-      <input type="password" id="register-password" placeholder="Contraseña" />
-      <button id="register-btn">Crear cuenta</button>
-      <p>¿Ya tienes cuenta? <a href="#" id="show-login">Iniciar sesión</a></p>
-    </div>
-
-    <div id="main-section" class="hidden">
-      <h2>Reservar una cita</h2>
-      <input type="text" id="name" placeholder="Tu nombre" />
+    <!-- Sección para reservar cita -->
+    <div id="appointment-container" style="display:none;">
+      <h2>Reserva tu cita</h2>
       <input type="date" id="date" />
       <input type="time" id="time" />
-      <button id="reserve-btn">Reservar</button>
-
-      <h3>Mis citas</h3>
-      <ul id="appointments-list"></ul>
-
-      <button id="logout-btn" class="logout">Cerrar sesión</button>
+      <button id="btn-reserve">Reservar</button>
+      <p id="appointment-message" class="success"></p>
+      <button id="btn-logout" class="logout">Cerrar sesión</button>
     </div>
+
   </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js"></script>
+
+  <script>
+    // Tu configuración de Firebase (cópiala de tu consola Firebase)
+    const firebaseConfig = {
+      apiKey: "TU_API_KEY",
+      authDomain: "TU_AUTH_DOMAIN",
+      projectId: "TU_PROJECT_ID",
+      storageBucket: "TU_STORAGE_BUCKET",
+      messagingSenderId: "TU_MESSAGING_SENDER_ID",
+      appId: "TU_APP_ID"
+    };
+
+    // Inicializa Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+  </script>
+
+  <script src="app.js"></script>
+
 </body>
 </html>
+
+
