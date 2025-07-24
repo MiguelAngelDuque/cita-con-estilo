@@ -104,6 +104,14 @@ btnReserve.addEventListener('click', () => {
   });
 });
 
+// Enviar email de confirmacion
+emailjs.send("service_xxx", "template_xxx", {
+  user_email: user.email,
+  fecha: date,
+  hora: time
+})
+
+
 // Logout
 btnLogout.addEventListener('click', () => {
   auth.signOut();
