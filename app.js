@@ -62,11 +62,9 @@ btnLogin.addEventListener('click', () => {
 // Detectar estado de sesión
 auth.onAuthStateChanged(user => {
   if (user) {
-    // Usuario logueado
     authContainer.style.display = 'none';
     appointmentContainer.style.display = 'block';
   } else {
-    // No logueado
     authContainer.style.display = 'block';
     appointmentContainer.style.display = 'none';
   }
@@ -79,6 +77,7 @@ btnReserve.addEventListener('click', () => {
   const user = auth.currentUser;
 
   appointmentMessage.textContent = '';
+  appointmentMessage.style.color = '';
 
   if (!date || !time) {
     appointmentMessage.textContent = 'Selecciona fecha y hora.';
